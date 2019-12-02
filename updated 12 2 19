@@ -1,0 +1,222 @@
+//public class GroupProject 
+//{
+	import java.awt.FlowLayout;
+	import java.awt.Font;
+	import java.awt.event.ActionEvent;
+	import java.awt.event.ActionListener;
+	import java.awt.event.ItemEvent;
+	import java.awt.event.ItemListener;
+
+	import javax.swing.ButtonGroup;
+	import javax.swing.JButton;
+	import javax.swing.JCheckBox;
+	import javax.swing.JFrame;
+	import javax.swing.JLabel;
+	import javax.swing.JTextField;
+
+	///
+	import java.awt.Color;
+
+	import java.awt.FlowLayout;
+
+	import java.awt.Font;
+	import java.awt.Label;
+
+	import javax.swing.*;
+
+		public class MainFlow implements ItemListener, ActionListener
+		{
+			//window is the Frame
+			private JFrame window;
+			// ?
+			//private JPanel jp;
+			
+			//text in window
+			private JLabel text;
+			
+			// button to move forward
+			private JTextField user;
+			//button used for event
+			private JButton pressButton;
+			private JLabel nameLabel;
+			
+			// Check Box
+			private JCheckBox Person1;
+			private JCheckBox Person2;
+			private JCheckBox Person3;
+			private JCheckBox Person4;
+			
+			
+			
+			
+			// Lets the user choose one option
+			private ButtonGroup button;
+			
+			public MainFlow()
+			{
+				window = new JFrame();
+				Font font = new Font("Arial", Font.BOLD, 40);
+				text = new JLabel("Hello, may you please enter your name to get started");
+				//text = new JLabel("Hello, may you please enter your name to get started");
+				text.setFont(font);
+				user = new JTextField(20);
+				pressButton = new JButton("Enter");
+				nameLabel = new JLabel();
+				
+				//make object of window and title 
+				window = new JFrame("Choose who you relate to more");
+				//window color
+				Color color = new Color(150, 180, 60);
+				window.getContentPane().setBackground(color);
+				//make object for font of text in window
+				Font windowText = new Font("Lobster", Font.ITALIC, 50 );
+				
+				//typed what you want for window text
+				//text = new JLabel("Who are you most like?");
+				
+				//put window text as font for text
+				text.setFont(windowText);
+				
+				// These are the Check boxes
+				Person1 = new JCheckBox("Gerardo", false);
+				Person2 = new JCheckBox("Marcos", false);
+				Person3 = new JCheckBox("Mark", false);
+				Person4 = new JCheckBox("Sabrina", false);
+
+				// These is where it groups the buttons so user can choose only one
+				button = new ButtonGroup();
+				
+			}
+			
+			public void startApp()
+			{
+				// First JFrame window
+				//set size of window
+				window.setSize(1200, 200);
+				//placement of window (automatically center = null)
+				window.setLocationRelativeTo(null);
+				//add outside of textbox text in window
+				window.add(text);
+				window.add(user);
+				window.add(pressButton);
+				//setting layout in window
+				window.setLayout(new FlowLayout());
+				//make it visible
+				window.setVisible(true);
+				//the x in the corner
+				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				window.setLocationRelativeTo(null);
+				pressButton.addActionListener(this);
+				window.add(nameLabel);
+				
+				//specific order of text
+				FlowLayout layout = new FlowLayout();
+				//how you want layout
+				layout.setAlignment(FlowLayout.CENTER);
+				
+				// the button group
+				button.add(Person1);
+				button.add(Person2);
+				button.add(Person3);
+				button.add(Person4);
+				
+				
+				// Puts the boxes in place
+				Person1.addItemListener(this);
+				Person2.addItemListener(this);
+				Person3.addItemListener(this);
+				Person4.addItemListener(this);
+				
+			}
+			
+			
+			public static void main(String[] args)
+			{
+				//make object to call method for window
+				MainFlow openWin = new MainFlow();
+				//use object to call method
+				openWin.startApp();
+				
+				
+				
+			}
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) 
+			{
+				
+				
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				String nombre = user.getText();
+				user.setText(nombre);
+				
+				text.setText("Lets begin " + nombre + ", Who are you most like?");
+				//text.setText("Who are you most like?");
+				//text = new JLabel("Who are you most like?");
+				
+				// Check boxes
+				window.add(Person1);
+				window.add(Person2);
+				window.add(Person3);
+				window.add(Person4);
+				
+				/////////////
+				/*System.out.println("Inside items state change");
+				Object sourceObj = event.getSource();
+				if(sourceObj == HMO)
+				{
+					if(event.getStateChange() == ItemEvent.SELECTED)
+					{
+						price += 200;
+					}
+					else if(event.getStateChange() == ItemEvent.DESELECTED)
+					{
+						price -= 200;
+					}
+				}
+				else if(sourceObj == PPO)
+				{
+					if(event.getStateChange() == ItemEvent.SELECTED)
+					{
+						price += 600;
+					}
+					else if(event.getStateChange() == ItemEvent.DESELECTED)
+					{
+						price -= 600;
+					}
+				}
+				else if(sourceObj == Vision)
+				{
+					if(event.getStateChange() == ItemEvent.SELECTED)
+					{
+						price += 20;
+					}
+					else if(event.getStateChange() == ItemEvent.DESELECTED)
+					{
+						price -= 20;
+					}
+				}
+				else if(sourceObj == Dental)
+				{
+					if(event.getStateChange() == ItemEvent.SELECTED)
+					{
+						price += 75;
+					}
+					else if(event.getStateChange() == ItemEvent.DESELECTED)
+					{
+						price -= 75;
+					}
+				}
+				System.out.println("$" + price);
+				totalPrice.setText("Final price is: $" + price);
+				
+				jframe.validate();
+				jframe.repaint();*/
+			}
+		
+	}
+
