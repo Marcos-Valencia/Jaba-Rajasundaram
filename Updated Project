@@ -1,0 +1,131 @@
+
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+///
+import java.awt.Color;
+
+import java.awt.FlowLayout;
+
+import java.awt.Font;
+import java.awt.Label;
+
+import javax.swing.*;
+
+	public class MainFlow implements ItemListener
+	{
+		//window is the Frame
+		private JFrame window;
+		// ?
+		private JPanel jp;
+		
+		//text in window
+		private JLabel text;
+		
+		// Check Box
+		private JCheckBox Person1;
+		private JCheckBox Person2;
+		private JCheckBox Person3;
+		private JCheckBox Person4;
+		
+		//button used for event
+		private JButton pressButton;
+		
+		// Lets the user choose one option
+		private ButtonGroup button;
+		
+		public MainFlow()
+		{
+			//make object of window and title 
+			window = new JFrame("Choose who you relate to more");
+			//window color
+			Color color = new Color(150, 180, 60);
+			window.getContentPane().setBackground(color);
+			//make object for font of text in window
+			Font windowText = new Font("Lobster", Font.ITALIC, 50 );
+			//typed what you want for window text
+			text = new JLabel("Who are you most like?");
+			//put windowtext as font for text
+			text.setFont(windowText);
+			
+			// These are the Check boxes
+			Person1 = new JCheckBox("Person1", false);
+			Person2 = new JCheckBox("Person2", false);
+			Person3 = new JCheckBox("Person3", false);
+			Person4 = new JCheckBox("Person4", false);
+
+			// These is where it groups the buttons so user can choose only one
+			button = new ButtonGroup();
+			
+		}
+		
+		public void startApp()
+		{
+			//set size of window
+			window.setSize(600, 200);
+			//placement of window (automatically center = null)
+			window.setLocationRelativeTo(null);
+			//add outside of textbox text in window
+			window.add(text);
+			//specific order of text
+			FlowLayout layout = new FlowLayout();
+			//how you want layout
+			layout.setAlignment(FlowLayout.CENTER);
+			//setting layout in window
+			window.setLayout(new FlowLayout());
+			//make it visible
+			window.setVisible(true);
+			//the x in the corner
+			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			// the button group
+			button.add(Person1);
+			button.add(Person2);
+			button.add(Person3);
+			button.add(Person4);
+			
+			// Check boxes
+			window.add(Person1);
+			window.add(Person2);
+			window.add(Person3);
+			window.add(Person4);
+			
+			// Puts the boxes in place
+			Person1.addItemListener(this);
+			Person2.addItemListener(this);
+			Person3.addItemListener(this);
+			Person4.addItemListener(this);
+			
+		}
+		
+		
+		public static void main(String[] args)
+		{
+			//make object to call method for window
+			MainFlow openWin = new MainFlow();
+			//use object to call method
+			openWin.startApp();
+			
+			
+			
+		}
+
+		@Override
+		public void itemStateChanged(ItemEvent arg0) 
+		{
+			
+			
+		}
+	
+}

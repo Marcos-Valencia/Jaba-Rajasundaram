@@ -1,0 +1,72 @@
+package wrkGroup;
+
+import java.awt.Color;
+
+import java.awt.FlowLayout;
+
+import java.awt.Font;
+import java.awt.Label;
+
+import javax.swing.*;
+
+public class MainFlow 
+{
+	//window
+	private JFrame window;
+	private JPanel jp;
+	//text in window
+	private JLabel text;
+	//button used for event
+	private JButton pressButton;
+	
+	public MainFlow()
+	{
+		//make object of window
+		window = new JFrame();
+		//window color
+		Color color = new Color(150, 180, 60);
+		window.getContentPane().setBackground(color);
+		//make object for font of text in window
+		Font windowText = new Font("Lobster", Font.ITALIC, 50 );
+		//typed what you want for window text
+		text = new JLabel("Who are you most like?");
+		//put windowtext as font for text
+		text.setFont(windowText);
+
+		
+	}
+	
+	public void startApp()
+	{
+		//set size of window
+		window.setSize(1000, 500);
+		//placement of window (automatically center = null)
+		window.setLocationRelativeTo(null);
+		//add outside of textbox text in window
+		window.add(text);
+		//specific order of text
+		FlowLayout layout = new FlowLayout();
+		//how you want layout
+		layout.setAlignment(FlowLayout.CENTER);
+		//setting layout in window
+		window.setLayout(new FlowLayout());
+		//make it visible
+		window.setVisible(true);
+		//the x in the corner
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		//make object to call method for window
+		MainFlow openWin = new MainFlow();
+		//use object to call method
+		openWin.startApp();
+		
+		
+		
+	}
+	
+}
