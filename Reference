@@ -1,0 +1,578 @@
+package vn;
+
+public class Book
+{
+	protected String title;
+	protected String author;
+	protected double price;
+	
+	
+	public Book()
+	{
+		this("The Great Gatsby","F Scott Fitzgerald", 15.00);
+	}
+	
+	public Book(String title, String author, double price)
+	{
+		this.title = title;
+		this.author = author;
+		this.price = price;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+public class CrimeNovel extends Book
+{
+	private boolean isEBook;
+	
+
+	public CrimeNovel()
+	{
+		this("Murder on the Orient Express","Agatha Christie",15.00,false);
+	}
+	
+	public CrimeNovel(String title, String author, double price, boolean isEBook)
+	{
+		super.title = title;
+		super.author = author;
+		super.price = price;
+		this.isEBook = isEBook;
+	}
+	
+	public boolean isEBook() {
+		return isEBook;
+	}
+
+	public void setEBook(boolean isEBook) {
+		this.isEBook = isEBook;
+	}
+	
+	public void printInfo()
+	{
+		String message;
+		
+		if(isEBook == true)
+		{
+			message = "This is an EBook pruchase";
+		}
+		else
+		{
+			message = "This is a physical purchase";
+		}
+		System.out.println("Book info: " + '\n' + "Title: " + this.title + '\n' + "Author: " + this.author + '\n' + "Price: $" + this.price + '\n'  + message);
+	}
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.*;
+
+
+public class MainScreen implements ItemListener, ActionListener
+{
+	//window
+	JFrame screen = new JFrame("Bookstore");
+	//first panel to display for the user
+	JPanel login = new JPanel();
+	JLabel title = new JLabel("BOOKSTORE");
+	//the genre selection box
+	JComboBox<String> genre = new JComboBox<>();
+	JLabel genreRun = new JLabel("Choose Genre");
+	JButton b1 = new JButton("search");
+	String bookType = " ";
+	
+	JButton restartButton = new JButton("Return");
+	
+	//the panel responsible for book display
+	JPanel books = new JPanel();
+	//all the books that will display at a time
+	JButton book1 = new JButton();
+	JButton book2 = new JButton();
+	JButton book3 = new JButton();
+	JButton book4 = new JButton();
+	JButton book5 = new JButton();
+	
+	//arraylist for every component of a book
+	ArrayList<String> booksTitle = new ArrayList<>();
+	ArrayList<String> booksAuthor = new ArrayList<>();
+	ArrayList<Double> booksPrice = new ArrayList<>();
+	ArrayList<Boolean> booksCover = new ArrayList<>();
+	
+	//the third panel that will display the book components 
+	JPanel bookDisplay = new JPanel();
+	//the labels that will display the book componenets
+	JLabel bookTitle = new JLabel("Title");
+	JLabel bookAuthor = new JLabel("Author: ");
+	JLabel bookPrice = new JLabel("Price: ");
+	JLabel bookCover = new JLabel("Cover: ");
+	
+	
+	public static void main(String[] args) 
+	{
+		//i don't like writing all my code in the main method unless i am testing it
+		//calls for the MainScreen method to start the GUI
+		new MainScreen();
+	}
+	
+	public void restart() 
+	{
+		//this will hide the first current panel(books)
+		books.setVisible(false);
+		//gets rid of the jframe and disposes of the memory that's been used
+		screen.dispose();
+		//calls for the MainScreen method
+		new MainScreen();
+		
+	}
+	
+	
+	MainScreen() 
+	{
+		
+		screen.setSize(600, 200);
+		//makes it so the JFrame window canm't expand
+		screen.setResizable(false);
+		screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		screen.setLocationRelativeTo(null);
+		
+		//gets rid of the layout and allows for direct placement
+		login.setLayout(null);
+		
+		title.setFont(new Font("Bell MT", Font.ITALIC, 46));
+		title.setBounds(150, 10, 400, 50);
+		genreRun.setBounds(170, 100, 150, 50);
+		genreRun.setFont(new Font("Bell MT", Font.BOLD, 18));
+		login.add(genreRun);
+		login.add(title);
+		
+		
+		genre.setLayout(new CardLayout());
+		genre.addItem("N/A");
+		genre.addItem("Crime");
+		genre.addItem("Young Adult");
+		genre.addItem("Memoir");
+		
+			
+		genre.setBounds(300, 113, 100, 25);
+		genre.addItemListener(this);
+		login.add(genre);
+		screen.add(login);
+		b1.addActionListener(this);
+		b1.setBounds(410, 113, 75, 25);
+		login.add(b1);
+		
+		
+		screen.setVisible(true);
+		
+	}
+	
+	@Override
+	public void itemStateChanged(ItemEvent e) 
+	{
+		//source is what is being selected when you are selecting for a genre
+		Object source = genre.getSelectedItem();
+		if (source == "Young Adult")
+		{
+			if (e.getStateChange() == ItemEvent.SELECTED) 
+			{
+				genreRun.setText("Young Adult");
+			}
+		}
+		if (source == "Crime")
+		{
+			if (e.getStateChange() == ItemEvent.SELECTED) 
+			{
+				System.out.println("Crime");
+			}
+		}
+		if (source == "Memoir")
+		{
+			if (e.getStateChange() == ItemEvent.SELECTED) 
+			{
+				System.out.println("Memior");
+			}
+		}
+		if (source == "N/A")
+		{
+			if (e.getStateChange() == ItemEvent.SELECTED) 
+			{
+				System.out.println("N/A");
+			}
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		// e.getsource() == "button name" checks which button is pressed since all of them are being sent to actionperformed
+		if (e.getSource()== b1)
+		{
+		String text = genre.getSelectedItem().toString();
+		bookType = text;
+		System.out.println(text);
+		login.setVisible(false);
+		screen.setSize(600, 600);
+		library();
+		}
+		if (e.getSource() == restartButton) 
+		{
+			restart();
+		}
+		
+		if (e.getSource()== book1)
+		{
+			
+			displayBook(booksTitle.get(0), booksAuthor.get(0), booksPrice.get(0), booksCover.get(0));
+			System.out.println("book1");
+		}
+		if (e.getSource()== book2)
+		{
+			displayBook(booksTitle.get(1), booksAuthor.get(1), booksPrice.get(1), booksCover.get(1));
+			System.out.println("book1");
+		}
+		if (e.getSource()== book3)
+		{
+			displayBook(booksTitle.get(2), booksAuthor.get(2), booksPrice.get(2), booksCover.get(2));
+			System.out.println("book1");
+		}
+		if (e.getSource()== book4)
+		{
+			displayBook(booksTitle.get(3), booksAuthor.get(3), booksPrice.get(3), booksCover.get(3));
+			System.out.println("book1");
+		}
+		if (e.getSource()== book5)
+		{
+			displayBook(booksTitle.get(4), booksAuthor.get(4), booksPrice.get(4), booksCover.get(4));
+			System.out.println("book1");
+		}
+	}
+	
+	public void defaultBooks() 
+	{
+		if (this.bookType == "Crime") 
+		{
+			//creates the book objects to its respective type
+			CrimeNovel book1 = new CrimeNovel();
+			CrimeNovel book2 = new CrimeNovel("In Cold Blood", "Truman", 5, true);
+			CrimeNovel book3 = new CrimeNovel("The Big Sleep", "Michelle McNamara", 10, true);
+			CrimeNovel book4 = new CrimeNovel("Dark Sacred Night", "Michael Connelly", 10, false);
+			CrimeNovel book5 = new CrimeNovel("The Border", "Don Winslow", 15, true);
+			
+			//all 20 lines of code is just used to retrieve the information from the object and sends it to the ArrayList
+			booksTitle.add(book1.getTitle());
+			booksTitle.add(book2.getTitle());
+			booksTitle.add(book3.getTitle());
+			booksTitle.add(book4.getTitle());
+			booksTitle.add(book5.getTitle());
+			
+			booksAuthor.add(book1.getAuthor());
+			booksAuthor.add(book2.getAuthor());
+			booksAuthor.add(book3.getAuthor());
+			booksAuthor.add(book4.getAuthor());
+			booksAuthor.add(book5.getAuthor());
+			
+			booksPrice.add(book1.getPrice());
+			booksPrice.add(book2.getPrice());
+			booksPrice.add(book3.getPrice());
+			booksPrice.add(book4.getPrice());
+			booksPrice.add(book5.getPrice());
+			
+			booksCover.add(book1.isEBook());
+			booksCover.add(book2.isEBook());
+			booksCover.add(book3.isEBook());
+			booksCover.add(book4.isEBook());
+			booksCover.add(book5.isEBook());
+			
+			set();
+		}
+		if (this.bookType == "Young Adult") 
+		{
+			//reapeating code but for different type
+			YoungAdult book1 = new YoungAdult();
+			YoungAdult book2 = new YoungAdult("Everything Everything", "Nicola Yoon", 8, true);
+			YoungAdult book3 = new YoungAdult("Lord of the Flies", "William Golding", 6, false);
+			YoungAdult book4 = new YoungAdult("Nineteen Eighty-Four", "George Orwell", 5, true);
+			YoungAdult book5 = new YoungAdult("Brave New World", "Aldous Huxley", 14, true);
+			
+			booksTitle.add(book1.getTitle());
+			booksTitle.add(book2.getTitle());
+			booksTitle.add(book3.getTitle());
+			booksTitle.add(book4.getTitle());
+			booksTitle.add(book5.getTitle());
+			
+			booksAuthor.add(book1.getAuthor());
+			booksAuthor.add(book2.getAuthor());
+			booksAuthor.add(book3.getAuthor());
+			booksAuthor.add(book4.getAuthor());
+			booksAuthor.add(book5.getAuthor());
+			
+			booksPrice.add(book1.getPrice());
+			booksPrice.add(book2.getPrice());
+			booksPrice.add(book3.getPrice());
+			booksPrice.add(book4.getPrice());
+			booksPrice.add(book5.getPrice());
+			
+			booksCover.add(book1.isEBook());
+			booksCover.add(book2.isEBook());
+			booksCover.add(book3.isEBook());
+			booksCover.add(book4.isEBook());
+			booksCover.add(book5.isEBook());
+			
+			set();
+		}
+		if (this.bookType == "Memoir") 
+		{
+			Memoir book1 = new Memoir();
+			Memoir book2 = new Memoir("Becoming", "Michelle Obama", 25, false);
+			Memoir book3 = new Memoir("The Glass Castle", "Jeannette Walls", 9, true);
+			Memoir book4 = new Memoir("Me", "Elton John", 9, false);
+			Memoir book5 = new Memoir("Angela's Ashes", "Frank McCourt", 14, true);
+			
+			booksTitle.add(book1.getTitle());
+			booksTitle.add(book2.getTitle());
+			booksTitle.add(book3.getTitle());
+			booksTitle.add(book4.getTitle());
+			booksTitle.add(book5.getTitle());
+			
+			booksAuthor.add(book1.getAuthor());
+			booksAuthor.add(book2.getAuthor());
+			booksAuthor.add(book3.getAuthor());
+			booksAuthor.add(book4.getAuthor());
+			booksAuthor.add(book5.getAuthor());
+			
+			booksPrice.add(book1.getPrice());
+			booksPrice.add(book2.getPrice());
+			booksPrice.add(book3.getPrice());
+			booksPrice.add(book4.getPrice());
+			booksPrice.add(book5.getPrice());
+			
+			booksCover.add(book1.isEBook());
+			booksCover.add(book2.isEBook());
+			booksCover.add(book3.isEBook());
+			booksCover.add(book4.isEBook());
+			booksCover.add(book5.isEBook());
+			
+			set();
+		}
+	}
+	public void displayBook(String title, String author, double price, boolean cover) 
+	{
+		books.setVisible(false);
+		bookDisplay.setLayout(null);
+		screen.setSize(700, 300);
+		screen.add(bookDisplay);
+		
+		bookTitle.setBounds(250, 50, 1000, 50);
+		bookTitle.setFont(new Font("Poor Richard", Font.ITALIC, 36));
+		bookTitle.setText(title);
+		bookDisplay.add(bookTitle);
+		
+		bookAuthor.setBounds(250, 100, 1000, 30);
+		bookAuthor.setFont(new Font("Poor Richard", Font.ITALIC, 24));
+		String temp1 = "Author: " + author;
+		bookAuthor.setText(temp1);
+		bookDisplay.add(bookAuthor);
+		
+		bookPrice.setBounds(250, 130, 1000, 30);
+		bookPrice.setFont(new Font("Poor Richard", Font.ITALIC, 24));
+		String temp2 = "Price: $" + price;
+		bookPrice.setText(temp2);
+		bookDisplay.add(bookPrice);
+		
+		bookCover.setBounds(250, 160, 1000, 30);
+		bookCover.setFont(new Font("Poor Richard", Font.ITALIC, 24));
+		String temp3;
+		if (cover != false) 
+		{
+			temp3 = "Cover: EBook";
+		}
+		else
+		{
+			temp3 = "Cover: Hard Cover";
+		}
+		bookCover.setText(temp3);
+		bookDisplay.add(bookCover);
+		bookDisplay.setVisible(true);
+	}
+	
+	public void library() 
+	{
+		books.setLayout(null);
+		title.setText("Library");
+		title.setBounds(225, 10, 400, 50);
+		books.add(title);
+		
+		screen.add(books);
+		book1.setBounds(100, 113, 400, 50);
+		book1.addActionListener(this);
+		books.add(book1);
+		book2.setBounds(100, 188, 400, 50);
+		book2.addActionListener(this);
+		books.add(book2);
+		book3.setBounds(100, 263, 400, 50);
+		book3.addActionListener(this);
+		books.add(book3);
+		book4.setBounds(100, 338, 400, 50);
+		book4.addActionListener(this);
+		books.add(book4);
+		book5.setBounds(100, 413, 400, 50);
+		book5.addActionListener(this);
+		books.add(book5);
+		restartButton.addActionListener(this);
+		restartButton.setBounds(450, 10, 90, 25);
+		books.add(restartButton);
+		
+		defaultBooks();
+		
+	}
+	public void set() 
+	{
+		this.book1.setText(booksTitle.get(0));
+		this.book2.setText(booksTitle.get(1));
+		this.book3.setText(booksTitle.get(2));
+		this.book4.setText(booksTitle.get(3));
+		this.book5.setText(booksTitle.get(4));	
+	}
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+public class Memoir extends Book
+{
+private boolean isEBook;
+	
+
+	public Memoir()
+	{
+		this("Night","Elie Wiesel",13.00,true);
+	}
+	
+	public Memoir(String title, String author, double price, boolean isEBook)
+	{
+		super.title = title;
+		super.author = author;
+		super.price = price;
+		this.isEBook = isEBook;
+	}
+	
+	public boolean isEBook() {
+		return isEBook;
+	}
+
+	public void setEBook(boolean isEBook) {
+		this.isEBook = isEBook;
+	}
+	
+	public void printInfo()
+	{
+		String message;
+		
+		if(isEBook == true)
+		{
+			message = "This is an EBook pruchase";
+		}
+		else
+		{
+			message = "This is a physical purchase";
+		}
+		System.out.println("Book info: " + '\n' + "Title: " + this.title + '\n' + "Author: " + this.author + '\n' + "Price: $" + this.price + '\n'  + message);
+	}
+}
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+public class YoungAdult extends Book
+{
+private boolean isEBook;
+	
+
+	public YoungAdult()
+	{
+		this("The Maze Runner","James Dashner",18.00,false);
+	}
+	
+	public YoungAdult(String title, String author, double price, boolean isEBook)
+	{
+		super.title = title;
+		super.author = author;
+		super.price = price;
+		this.isEBook = isEBook;
+	}
+	
+	public boolean isEBook() {
+		return isEBook;
+	}
+
+	public void setEBook(boolean isEBook) {
+		this.isEBook = isEBook;
+	}
+	
+	public void printInfo()
+	{
+		String message;
+		
+		if(isEBook == true)
+		{
+			message = "This is an EBook pruchase";
+		}
+		else
+		{
+			message = "This is a physical purchase";
+		}
+		System.out.println("Book info: " + '\n' + "Title: " + this.title + '\n' + "Author: " + this.author + '\n' + "Price: $" + this.price + '\n'  + message);
+	}
+}
